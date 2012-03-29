@@ -1,7 +1,9 @@
 package org.mammon.sandbox;
 
-import org.mammon.brands.SignatureHashFunction;
+import java.math.BigInteger;
+
 import org.mammon.brands.Group.Element;
+import org.mammon.brands.SignatureHashFunction;
 
 public class ExampleSignatureHashFunction extends OracleHashFunction implements SignatureHashFunction<ExampleGroup> {
 
@@ -10,7 +12,7 @@ public class ExampleSignatureHashFunction extends OracleHashFunction implements 
 	}
 
 	@Override
-	public Element<ExampleGroup> hash(Element<ExampleGroup> blindedIdentity, Element<ExampleGroup> commitment,
+	public BigInteger hash(Element<ExampleGroup> blindedIdentity, Element<ExampleGroup> commitment,
 			Element<ExampleGroup>... secretValues) {
 		return oracle(blindedIdentity, commitment, secretValues[0], secretValues[1], secretValues[2]);
 	}

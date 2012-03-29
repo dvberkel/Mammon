@@ -1,25 +1,33 @@
 package org.mammon.brands;
 
+import java.math.BigInteger;
+
 import org.mammon.brands.rand.RandomGenerator;
 
 /**
  * This interface can be used for generic typing, to bind classes of an actual
  * implementation compile-time.
- * 
+ *
  * The group must comply to the requirements set out in the Brands scheme for
- * the group $G$ and may in particular be $\mathbb{Z}_q^*$.
+ * the group $G_{q}$ and may in particular be a subgroup of $\mathbb{Z}_p^*$.
+ * where $q | (p-1)$.
  */
 public interface Group<G extends Group<G>> {
 
 	/**
-	 * @return the zero element of this group.
+	 * @return the identity element of this group.
 	 */
-	Element<G> getZero();
+	Element<G> getIdentity();
 
 	/**
-	 * @return the unit (one) element of this group.
+	 * @return the generator element of this group.
 	 */
-	Element<G> getOne();
+	Element<G> getGenerator();
+
+	/**
+	 * @return the number of elements in this group
+	 */
+	BigInteger getOrder();
 
 	/**
 	 * @param random
@@ -45,24 +53,17 @@ public interface Group<G extends Group<G>> {
 
 		/**
 		 * @param other
-		 *            an element from the same group to add together.
-		 * @return the sum of this element and the other element.
-		 */
-		Element<G> add(Element<G> other);
-
-		/**
-		 * @param other
 		 *            an element from the same group to multiply together.
-		 * @return the multiplication of this element and the other element.
+		 * @return the product of this element and the other element.
 		 */
 		Element<G> multiply(Element<G> other);
 
 		/**
 		 * @param exponent
-		 *            an element from the same group to use as exponent.
+		 *            an element of $\mathbb{Z}_q$ to serve as exponent.
 		 * @return the exponentiation of this element by the exponent.
 		 */
-		Element<G> exponentiate(Element<G> exponent);
+		Element<G> exponentiate(BigInteger exponent);
 
 	}
 

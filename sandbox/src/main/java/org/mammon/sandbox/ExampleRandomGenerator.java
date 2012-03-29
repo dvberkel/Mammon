@@ -1,18 +1,14 @@
 package org.mammon.sandbox;
 
 import java.math.BigInteger;
-import java.security.SecureRandom;
 
 import org.mammon.brands.rand.RandomGenerator;
 
-public class SecureRandomGenerator implements RandomGenerator {
-
-	public SecureRandomGenerator(SecureRandom random) {
-	}
+public class ExampleRandomGenerator implements RandomGenerator {
 
 	@Override
 	public BigInteger bigInteger(BigInteger maximum) {
-		return null;
+		return BigInteger.valueOf(37); // I threw a D100 and got 37
 	}
 
 }

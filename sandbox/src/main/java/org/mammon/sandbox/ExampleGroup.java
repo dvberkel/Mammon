@@ -1,5 +1,6 @@
 package org.mammon.sandbox;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.TreeSet;
@@ -16,10 +17,13 @@ public class ExampleGroup implements Group<ExampleGroup> {
 
 	private final ExampleElement one = new StaticElement("1");
 
-	private final ExampleElement last = new StaticElement("-1");
+	@Override
+	public BigInteger getOrder() {
+		return null;
+	}
 
 	@Override
-	public ExampleElement getOne() {
+	public ExampleElement getGenerator() {
 		return one;
 	}
 
@@ -35,7 +39,7 @@ public class ExampleGroup implements Group<ExampleGroup> {
 	}
 
 	@Override
-	public ExampleElement getZero() {
+	public ExampleElement getIdentity() {
 		return zero;
 	}
 
@@ -60,18 +64,9 @@ public class ExampleGroup implements Group<ExampleGroup> {
 	public abstract class ExampleElement implements Group.Element<ExampleGroup> {
 
 		@Override
-		public ExampleElement add(Element<ExampleGroup> other) {
+		public ExampleElement exponentiate(BigInteger exponent) {
 			try {
-				return new AdditionElement(this, (ExampleElement) other);
-			} catch (ClassCastException e) {
-				throw new IllegalArgumentException("Argument must be of type ExampleElement");
-			}
-		}
-
-		@Override
-		public ExampleElement exponentiate(Element<ExampleGroup> exponent) {
-			try {
-				return new ExponentiationElement(this, (ExampleElement) exponent);
+				return new ExponentiationElement(this, exponent);
 			} catch (ClassCastException e) {
 				throw new IllegalArgumentException("Argument must be of type ExampleElement");
 			}
@@ -84,7 +79,7 @@ public class ExampleGroup implements Group<ExampleGroup> {
 
 		@Override
 		public ExampleElement getInverse() {
-			return new ExponentiationElement(this, last);
+			return new ExponentiationElement(this, BigInteger.valueOf(-1L));
 		}
 
 		@Override
@@ -268,9 +263,9 @@ public class ExampleGroup implements Group<ExampleGroup> {
 
 		private final ExampleElement base;
 
-		private final ExampleElement exponent;
+		private final BigInteger exponent;
 
-		private ExponentiationElement(ExampleElement base, ExampleElement exponent) {
+		private ExponentiationElement(ExampleElement base, BigInteger exponent) {
 			this.base = base;
 			this.exponent = exponent;
 		}
@@ -306,18 +301,9 @@ public class ExampleGroup implements Group<ExampleGroup> {
 		@Override
 		public ExampleElement simplify() {
 			ExampleElement base = this.base.simplify();
-			ExampleElement exponent = this.exponent.simplify();
-			if (exponent instanceof AdditionElement) {
-				AdditionElement e = (AdditionElement) exponent;
-				ExampleElement[] operands = new ExampleElement[e.operands.length];
-				for (int i = 0; i < e.operands.length; i++) {
-					operands[i] = new ExponentiationElement(base, e.operands[i]);
-				}
-				return new MultiplicationElement(operands).simplify();
-			}
 			if (base instanceof ExponentiationElement) {
 				ExponentiationElement e = (ExponentiationElement) base;
-				return new ExponentiationElement(e.base, new MultiplicationElement(e.exponent, exponent).simplify());
+				return new ExponentiationElement(e.base, e.exponent.multiply(exponent));
 			}
 			if (base instanceof MultiplicationElement) {
 				MultiplicationElement e = (MultiplicationElement) base;

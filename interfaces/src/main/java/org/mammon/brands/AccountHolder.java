@@ -1,5 +1,7 @@
 package org.mammon.brands;
 
+import java.math.BigInteger;
+
 import org.mammon.Bearer;
 
 /**
@@ -18,7 +20,7 @@ public interface AccountHolder<G extends Group<G>, S, T, H extends SignatureHash
 	/**
 	 * @return the private key $u_1$ of the Account Holder.
 	 */
-	Group.Element<G> getPrivateKey();
+	BigInteger getPrivateKey();
 
 	/**
 	 * @return the public key or identity $I$ of the Account Holder, which

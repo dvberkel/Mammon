@@ -1,18 +1,23 @@
 package org.mammon.sandbox;
 
+import java.math.BigInteger;
+
 import org.mammon.brands.AccountHolder;
 import org.mammon.brands.BrandsSchemeSetup;
 import org.mammon.brands.Group;
+import org.mammon.brands.Group.Element;
 import org.mammon.brands.PaymentHashFunction;
 import org.mammon.brands.SignatureHashFunction;
-import org.mammon.brands.Group.Element;
+import org.mammon.brands.rand.RandomGenerator;
 
 public class ExampleAccountHolder<G extends Group<G>, S, T, H extends SignatureHashFunction<G>, H0 extends PaymentHashFunction<G, S, T>>
 		implements AccountHolder<G, S, T, H, H0> {
 
+	private final RandomGenerator generator = new ExampleRandomGenerator();
+
 	private final BrandsSchemeSetup<G, S, T, H, H0> setup;
 
-	private final Element<G> privateKey;
+	private final BigInteger privateKey;
 
 	private final Element<G> publicKey;
 
@@ -20,7 +25,7 @@ public class ExampleAccountHolder<G extends Group<G>, S, T, H extends SignatureH
 
 	public ExampleAccountHolder(BrandsSchemeSetup<G, S, T, H, H0> setup, ExampleBank<G, S, T, H, H0> bank) {
 		this.setup = setup;
-		privateKey = setup.getGroup().getRandomElement(null);
+		privateKey = generator.bigInteger(setup.getGroup().getOrder());
 		publicKey = setup.getGenerators()[1].exponentiate(privateKey);
 		blindedIdentity = publicKey.multiply(setup.getGenerators()[2]).exponentiate(bank.getPrivateKey());
 	}
@@ -31,7 +36,7 @@ public class ExampleAccountHolder<G extends Group<G>, S, T, H extends SignatureH
 	}
 
 	@Override
-	public Element<G> getPrivateKey() {
+	public BigInteger getPrivateKey() {
 		return privateKey;
 	}
 

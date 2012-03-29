@@ -13,7 +13,7 @@ public interface Coin<G extends Group<G>, S, T, H extends SignatureHashFunction<
 	/**
 	 * The issuer of an IOU is the entity that has created the promise to pay
 	 * the face value when a bearer wants to redeem the IOU.
-	 * 
+	 *
 	 * @return the issuer of this IOU.
 	 */
 	@Override
@@ -37,6 +37,6 @@ public interface Coin<G extends Group<G>, S, T, H extends SignatureHashFunction<
 	 *         coin has been correctly issued by the Bank and must therefore be
 	 *         valid.
 	 */
-	Group.Element<G>[] getCoinSignature();
+	Object[] getCoinSignature();
 
 }

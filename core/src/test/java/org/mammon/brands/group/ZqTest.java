@@ -23,14 +23,14 @@ public class ZqTest {
 
 	@Test
 	public void shouldBeAbleToReturnZeroOfTheGroup() {
-		Element<Zq> zero = group.getZero();
+		Element<Zq> zero = group.getIdentity();
 
 		assertEquals(group, zero.getGroup());
 	}
 
 	@Test
 	public void shouldBeAbleToReturnOneOfTheGroup() {
-		Element<Zq> one = group.getOne();
+		Element<Zq> one = group.getGenerator();
 
 		assertEquals(group, one.getGroup());
 	}

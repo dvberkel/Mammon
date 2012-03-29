@@ -1,6 +1,6 @@
 package org.mammon.brands.group;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import org.mammon.brands.Group;
 import org.mammon.brands.rand.RandomGenerator;
@@ -8,29 +8,34 @@ import org.mammon.brands.rand.RandomGenerator;
 public class Zq implements Group<Zq> {
 
 	public static Group<Zq> Z(long order) {
-		return new Zq(BigDecimal.valueOf(order));
+		return new Zq(BigInteger.valueOf(order));
 	}
 
-	public Zq(BigDecimal valueOf) {
+	public Zq(BigInteger order) {
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Element<Zq> getZero() {
+	public Element<Zq> getIdentity() {
 		return element(0L);
 	}
 
 	private Element<Zq> element(long element) {
-		return element(BigDecimal.valueOf(element));
+		return element(BigInteger.valueOf(element));
 	}
 
-	private ZqElement element(BigDecimal element) {
+	private ZqElement element(BigInteger element) {
 		return new ZqElement(element);
 	}
 
 	@Override
-	public Element<Zq> getOne() {
+	public Element<Zq> getGenerator() {
 		return element(1L);
+	}
+
+	@Override
+	public BigInteger getOrder() {
+		return null;
 	}
 
 	@Override
@@ -40,9 +45,9 @@ public class Zq implements Group<Zq> {
 	}
 
 	class ZqElement implements Element<Zq> {
-		private final BigDecimal element;
+		private final BigInteger element;
 
-		public ZqElement(BigDecimal element) {
+		public ZqElement(BigInteger element) {
 			this.element = element;
 		}
 
@@ -57,19 +62,12 @@ public class Zq implements Group<Zq> {
 		}
 
 		@Override
-		public Element<Zq> add(Element<Zq> other) {
+		public Element<Zq> multiply(Element<Zq> other) {
 			return element(this.element.add(((ZqElement) other).element));
 		}
 
 		@Override
-		public Element<Zq> multiply(Element<Zq> other) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Element<Zq> exponentiate(Element<Zq> exponent) {
-			// TODO Auto-generated method stub
+		public Element<Zq> exponentiate(BigInteger exponent) {
 			return null;
 		}
 

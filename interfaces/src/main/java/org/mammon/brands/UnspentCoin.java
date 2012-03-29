@@ -1,5 +1,7 @@
 package org.mammon.brands;
 
+import java.math.BigInteger;
+
 /**
  * In the Brands scheme, coins that have been issued, but have not been spent
  * yet, are hold by an bearer that must be an AccountHolder. The isSellable()
@@ -11,7 +13,7 @@ public interface UnspentCoin<G extends Group<G>, S, T, H extends SignatureHashFu
 	/**
 	 * The bearer of an IOU is the entity that currently holds the IOU and is
 	 * therefore in the position to redeem it.
-	 * 
+	 *
 	 * @return the current bearer of this IOU.
 	 */
 	@Override
@@ -20,12 +22,12 @@ public interface UnspentCoin<G extends Group<G>, S, T, H extends SignatureHashFu
 	/**
 	 * @return the identity blinding factor $s$.
 	 */
-	Group.Element<G> getBlindingFactor();
+	BigInteger getBlindingFactor();
 
 	/**
 	 * @return an array of length 2, containing the payer witnesses $x_1$ and
 	 *         $x_2$.
 	 */
-	Group.Element<G>[] getPayerWitness();
+	BigInteger[] getPayerWitness();
 
 }

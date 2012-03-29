@@ -1,7 +1,9 @@
 package org.mammon.sandbox;
 
-import org.mammon.brands.PaymentHashFunction;
+import java.math.BigInteger;
+
 import org.mammon.brands.Group.Element;
+import org.mammon.brands.PaymentHashFunction;
 
 public class ExamplePaymentHashFunction extends OracleHashFunction implements
 		PaymentHashFunction<ExampleGroup, String, Long> {
@@ -11,7 +13,7 @@ public class ExamplePaymentHashFunction extends OracleHashFunction implements
 	}
 
 	@Override
-	public Element<ExampleGroup> hash(Element<ExampleGroup> blindedIdentity, Element<ExampleGroup> commitment,
+	public BigInteger hash(Element<ExampleGroup> blindedIdentity, Element<ExampleGroup> commitment,
 			String shopIdentity, Long time) {
 		return oracle(blindedIdentity, commitment, shopIdentity, time);
 	}

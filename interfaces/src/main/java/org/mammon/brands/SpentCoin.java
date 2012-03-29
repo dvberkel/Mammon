@@ -1,5 +1,7 @@
 package org.mammon.brands;
 
+import java.math.BigInteger;
+
 /**
  * In the Brands scheme, coins that have been issued and spent, are hold by an
  * bearer that must be a Shop. The isSellable() method of any implementation of
@@ -11,7 +13,7 @@ public interface SpentCoin<G extends Group<G>, S, T, H extends SignatureHashFunc
 	/**
 	 * The bearer of an IOU is the entity that currently holds the IOU and is
 	 * therefore in the position to redeem it.
-	 * 
+	 *
 	 * @return the current bearer of this IOU.
 	 */
 	@Override
@@ -28,6 +30,6 @@ public interface SpentCoin<G extends Group<G>, S, T, H extends SignatureHashFunc
 	 *         to prove that the coin has been spent by the original
 	 *         AccountHolder.
 	 */
-	Group.Element<G>[] getSpendingCommitments();
+	BigInteger[] getSpendingCommitments();
 
 }

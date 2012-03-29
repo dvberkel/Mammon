@@ -1,5 +1,7 @@
 package org.mammon.brands;
 
+import java.math.BigInteger;
+
 /**
  * The payment hash is used to compute challenges during the payment protocol.
  */
@@ -7,7 +9,7 @@ public interface PaymentHashFunction<G extends Group<G>, S, T> {
 
 	/**
 	 * Hash the input value into an output element.
-	 * 
+	 *
 	 * @param blindedIdentity
 	 *            the blinded identity $A$ of the AccountHolder that withdrew
 	 *            the coins from the Bank.
@@ -20,6 +22,6 @@ public interface PaymentHashFunction<G extends Group<G>, S, T> {
 	 *            time when the payment protocol has been executed.
 	 * @return hashed value.
 	 */
-	Group.Element<G> hash(Group.Element<G> blindedIdentity, Group.Element<G> commitment, S shopIdentity, T time);
+	BigInteger hash(Group.Element<G> blindedIdentity, Group.Element<G> commitment, S shopIdentity, T time);
 
 }

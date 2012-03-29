@@ -1,5 +1,7 @@
 package org.mammon.brands;
 
+import java.math.BigInteger;
+
 /**
  * The signature hash is used to construct and verify signatures of the Bank.
  */
@@ -7,7 +9,7 @@ public interface SignatureHashFunction<G extends Group<G>> {
 
 	/**
 	 * Hash the input value into an output element.
-	 * 
+	 *
 	 * @param blindedIdentity
 	 *            the blinded identity $A$ of the AccountHolder that withdrew
 	 *            the coins from the Bank.
@@ -19,7 +21,7 @@ public interface SignatureHashFunction<G extends Group<G>> {
 	 *            $b'$.
 	 * @return hashed value.
 	 */
-	Group.Element<G> hash(Group.Element<G> blindedIdentity, Group.Element<G> commitment,
+	BigInteger hash(Group.Element<G> blindedIdentity, Group.Element<G> commitment,
 			Group.Element<G>... secretValues);
 
 }

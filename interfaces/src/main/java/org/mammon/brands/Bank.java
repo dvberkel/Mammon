@@ -1,5 +1,7 @@
 package org.mammon.brands;
 
+import java.math.BigInteger;
+
 import org.mammon.Issuer;
 
 /**
@@ -16,7 +18,7 @@ public interface Bank<G extends Group<G>, S, T, H extends SignatureHashFunction<
 	/**
 	 * @return the private key $x$ of the Bank.
 	 */
-	Group.Element<G> getPrivateKey();
+	BigInteger getPrivateKey();
 
 	/**
 	 * @return the public key $h$ of the Bank, which equals $h = g^x$.

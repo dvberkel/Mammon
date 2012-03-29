@@ -1,23 +1,25 @@
 package org.mammon.sandbox;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.mammon.brands.Group.Element;
+import org.mammon.brands.rand.RandomGenerator;
 
 @SuppressWarnings("unchecked")
 public class OracleHashFunction {
 
 	protected final ExampleGroup g;
-	private Map map = new HashMap();
-	private int d;
+	private final RandomGenerator generator = new ExampleRandomGenerator();
+	private final Map map = new HashMap();
+	private final int d;
 
 	public OracleHashFunction(ExampleGroup g, int depth) {
 		this.g = g;
 		d = depth - 1;
 	}
 
-	protected Element<ExampleGroup> oracle(Object... val) {
+	protected BigInteger oracle(Object... val) {
 		Map curr = map;
 		for (int i = 0; i < d; i++) {
 			Map next = (Map) curr.get(Integer.valueOf(val[i].hashCode()));
@@ -28,9 +30,9 @@ public class OracleHashFunction {
 			curr = next;
 		}
 		if (curr.containsKey(Integer.valueOf(val[d].hashCode()))) {
-			return (Element<ExampleGroup>) curr.get(Integer.valueOf(val[d].hashCode()));
+			return BigInteger.valueOf((Integer)curr.get(Integer.valueOf(val[d].hashCode())));
 		} else {
-			Element<ExampleGroup> element = g.getRandomElement(null);
+			BigInteger element = generator.bigInteger(g.getOrder());
 			curr.put(Integer.valueOf(val[d].hashCode()), element);
 			return element;
 		}
